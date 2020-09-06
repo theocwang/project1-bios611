@@ -12,3 +12,6 @@ Within this particular dataset, we have health data for counties ranging from Al
 The dataset used in this analysis can be found on the County Health Rankings website, categorized by state and year. This particular dataset was derived from 2020 North Carolina health data.
 
 #### Preliminary Figures
+![](air_quality_histogram.jpeg)
+
+![](air_quality_vs_food_index.jpeg)
