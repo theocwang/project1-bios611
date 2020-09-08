@@ -17,3 +17,5 @@ The dataset used in this analysis can be found on the County Health Rankings web
 ![](air_quality_histogram.jpeg)
 
 ![](air_quality_vs_food_index.jpeg)
+
+![](mentally_unhealthy_days_plot.jpeg)
