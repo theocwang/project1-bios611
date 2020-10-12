@@ -1,0 +1,132 @@
+---
+title: "Homework 4"
+author: "Theodore Wang"
+date: "10/11/2020"
+output: html_document
+---
+
+## Packages
+
+I am installing and loading packages here.
+```{r package}
+packages <- c("gbm", "tidyverse", "MLmetrics", "Rtsne")
+for (p in packages) {
+  if (!requireNamespace(p)) {
+    install.packages(p)
+  }
+}
+```
+
+```{r load_packages}
+library(tidyverse)
+library(gbm)
+library(MLmetrics)
+library(Rtsne)
+```
+
+## Data Import
+
+I import the data here using the 'read.csv()' command; I've also changed the Gender column from "char" to "factor".
+```{r import}
+hwData <- read.csv(file = '/Users/Theo/Documents/Biology/BIOS 611/HW4/500_Person_Gender_Height_Weight_Index.csv', header=T)
+hwData$Gender <- as.factor(hwData$Gender) %>% as.integer(hwData$Gender)
+hwData[hwData == 1] <- 0
+hwData[hwData == 2] <- 1
+hwData
+```
+
+### Data Partition
+
+Here I've partitioned the data into training and testing segments for the sake of the GLM later on. I've split the data 60/40 (60% dedicated to training data, 40% dedicated to testing data).
+```{r partition}
+set.seed(50)
+sample <- createDataPartition(y = hwData$Gender, p = 0.60, list=F)
+trainData <- hwData[sample, ]
+testData <- hwData[-sample, ]
+```
+
+## Problem 1
+
+```{r glm}
+# Model
+model <- glm(Gender ~ Weight + Height, data = trainData, family=binomial)
+model
+
+# Predictor
+prediction <- predict(model, newdata=testData, type="response")
+sum((prediction > 0.5) == testData$Gender)/nrow(testData)
+```
+The accuracy of this model deviates around 0.4, but with a set.seed(50), it turns out to be 0.435.
+
+## Problem 2
+
+```{r gbm}
+# Model
+model2 <- gbm(Gender ~ Weight + Height, distribution="gaussian", data = trainData)
+model2
+
+# Predictor
+pred <- predict(model2, testData, type="response")
+sum((pred > 0.5) == testData$Gender)/nrow(testData)
+```
+With a set.seed(50), the accuracy result is 0.465. Without a set seed, the accuracy fluctuates between 0.45 and slightly above 0.515.
+
+## Problem 3
+```{r fifty}
+# Filtering the data
+set.seed(150)
+sample <- hwData %>% filter(Gender == 1)
+sampled <- sample(nrow(sample), 195)
+finalData <- hwData[-sampled, ]
+
+# Split the data into train and test
+set.seed(150)
+sample2 <- createDataPartition(y = filterDataFifty$Gender, p = 0.60, list=F)
+trainMaleData <- finalData[sample2, ]
+testMaleData <- finalData[-sample2, ]
+
+# Create model
+model3 <- glm(Gender ~ Weight + Height, data = trainMaleData, family = binomial)
+model3
+predictor <- predict(model3, testMaleData, type="response")
+sum((predictor > 0.5) == testMaleData$Gender)/nrow(testMaleData)
+
+# F1 score
+f1 <- MLmetrics::F1_Score
+f1(testMaleData$Gender, predictor > 0.5)
+```
+Unfortunately I couldn't seem to get the F1 score to work; it kep returning an "Error in FUN(X[[i]], ...) : only defined on a data frame with all numeric variables". I suspect it has something to do with how I filtered out the male data rows.
+
+## Problem 4
+```{r ROC}
+roc <- do.call(rbind, Map(function(threshold) {
+  p <- predictor > threshold;
+  tp <- sum(p[testMaleData$Gender])/sum(testMaleData$Gender);
+  fp <- sum(p[!testMaleData$Gender])/sum(!testMaleData$Gender);
+  tibble(threshold=threshold, tp = tp, fp = fp)
+}, seq(100)/100))
+
+ggplot(roc, aes(fp, tp)) + geom_line() + xlim(0,1) + ylim(0,1) + labs(title="ROC Curve", x="False Positive Rate", y="True Positive Rate")
+```
+I'm guessing there are many errors with my models given this janky ROC Curve, but my interpretation is that as the false positive rate hits slightly before 0.375, the true positive rate shoots up from 0.00 to 1.0. The closer the curve on a ROC plot is to 45 degrees, the less accurate the model (although I don't doubt that my case is erroneous as well). Also, the area under the curve represents the probability that a randomly chosen positive instance is ranked higher than a randomly chosen negative instance; my curve doesn't really have an area under the curve until false positive hits after 0.375.
+
+## Problem 5
+```{R kMeans}
+cc <- kmeans(testMaleData, 4)
+fit <- Rtsne(testMaleData, dims = 2, check_duplicates=F)
+ggplot(fit$Y %>% as.data.frame() %>% as_tibble() %>% mutate(label=cc$cluster), aes(V1, V2)) + geom_point(aes(color=factor(label)))
+cc$centers
+cc$tot.withinss
+```
+
+My clusters had the following centers:
+
+     Gender   Height    Weight    Index
+1 0.4756098 168.3415 101.69512 4.000000
+2 0.5000000 183.6522 139.10870 4.543478
+3 0.5000000 154.9310 141.96552 5.000000
+4 0.4494382 169.5393  66.93258 1.606742
+
+and a total sum of square distances value of 77831.19.
+
+
