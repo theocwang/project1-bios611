@@ -8,14 +8,7 @@ output: html_document
 ## Packages
 
 I am installing and loading packages here.
-```{r package}
-packages <- c("gbm", "tidyverse", "MLmetrics", "Rtsne")
-for (p in packages) {
-  if (!requireNamespace(p)) {
-    install.packages(p)
-  }
-}
-```
+10/12 Update - I've taken a look at the project 1 feedback video and I understand the concept of dividing the coding segments into separate parts. I've removed the segment regarding installing a list of packages from this Rmd document but have yet to convert the code using normal scripts and makefiles.
 
 ```{r load_packages}
 library(tidyverse)
