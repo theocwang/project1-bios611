@@ -37,3 +37,15 @@ The CAFO data set used in this analysis records the number of allowable CAFO sit
 
 ![](mental_days_vs_CAFO_count.png)
 
+### Running the Code
+You'll need Docker and the ability to run Docker as your current user.
+Build the container using:
+
+    > docker build . -t project1
+
+This Docker container is based on rocker/verse. To run the RStudio server:
+
+    > docker run -v `pwd`:/home/rstudio -p 8787:8787\
+      -e PASSWORD=cafocount -t project1
+      
+Then connect to port localhost:8787.
