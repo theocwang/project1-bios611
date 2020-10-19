@@ -1,4 +1,5 @@
 .PHONY: clean
+SHELL: /bin/bash
 
 clean: 
 	rm -f derivedData/*.csv
