@@ -6,7 +6,8 @@ clean:
 	rm -f figures/*.png
 	rm -f project1.pdf
 
-derivedData/finalData.csv: sourceData/List_Of_Permitted_Animal_Facilities2019-11-06.xls\ 
+derivedData/finalData.csv:
+	sourceData/List_Of_Permitted_Animal_Facilities2019-11-06.xls\ 
 	tidyData.R\ 
 	sourceData/2020_County_Health_Rankings_North_Carolina_Data_-_v1_0.xlsx
 		Rscript tidyData.R
