@@ -29,8 +29,10 @@ If there are significant issues to health caused by CAFOS, what steps can we tak
 
 ### Data
 The County Health dataset used in this analysis can be found on the County Health Rankings website, categorized by state and year. This particular dataset was derived from 2020 North Carolina health data.
+https://www.countyhealthrankings.org/app/north-carolina/2020/overview
 
 The CAFO data set used in this analysis records the number of allowable CAFO sites per county in North Carolina on a site by site basis; this particular dataset was recorded in 2019.
+https://files.nc.gov/ncdeq/List_Of%20Permitted_Animal_Facilities2019-11-06.xls
 
 ### Preliminary Figures
 ![](county_CAFO_histogram.png)
