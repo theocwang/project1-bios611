@@ -1,10 +1,18 @@
-.PHONY: clean
+.PHONY: clean cafoHistoExplore scatterExplore
 SHELL: /bin/bash
 
 clean: 
 	rm -f derivedData/*.csv
 	rm -f figures/*.png
 	rm -f project1.pdf
+
+cafoHistoExplore:\
+ derivedData/finalData.csv\
+	Rscript cafoHistoExplore.R ${PORT}
+
+scatterExplore:\
+ derivedData/finalData.csv\
+	Rscript scatterExplore.R ${PORT}
 
 derivedData/finalData.csv:\
  sourceData/List_Of_Permitted_Animal_Facilities2019-11-06.xls\
