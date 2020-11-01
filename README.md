@@ -51,3 +51,20 @@ This Docker container is based on rocker/verse. To run the RStudio server:
       -e PASSWORD=cafocount -t project1
       
 Then connect to port localhost:8787.
+
+### Running RShiny
+To run the interactive segments of this project, use the following two docker commands:
+#### Allowable CAFO Count Histogram
+
+    > docker run -p 8788:8788 \
+         -v `pwd`:/home/rstudio \
+         -e PASSWORD=cafocount \
+         -it l17 sudo -H -u rstudio /bin/bash -c "cd ~/; PORT=8788 make cafoHistoExplore"
+
+#### Allowable CAFO Count vs Health Variable Scatter Plot
+
+    > docker run -p 8789:8789 \
+         -v `pwd`:/home/rstudio \
+         -e PASSWORD=cafocount \
+         -it l17 sudo -H -u rstudio /bin/bash -c "cd ~/; PORT=8789 make scatterExplore"
+
