@@ -16,3 +16,7 @@ Here is the bash code that I used to address that issue in case you run into it:
 conda install fiona pyproj six
 pip install geopandas
 ```
+
+## Data
+You can find the spatial data set of the counties and state borders of North Carolina here: 
+https://hub.arcgis.com/datasets/34acbf4a26784f189c9528c1cf317193_0/data
