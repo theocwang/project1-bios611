@@ -81,3 +81,10 @@ The scatter plot suggests this CAFOs may have little to no effect on food enviro
 
 # Conclusion
 This basic analysis on the effects of allowable CAFO counts and presence in counties in North Carolina on various health variables produced interesting results. My initial thoughts were that increased CAFO presence would lead to markedly poorer air quality and food environment index scores; the results tell a different story. Conversely, these preliminary results also showed signs that CAFO counties had measurably higher percentages or average number of distress and average number of unhealthy days, both mentally and physically. While none of these figures should be used to conclude any causation between CAFO count and poorer healthy variable measurements, it can be a cause to investigate further. 
+
+# Python Integration
+![](Python-Integration/figures/geoPlot.png)
+
+Using Python to explore further, I decided to try to get a visual graphic on the distribution of counties with observable allowable CAFO counts throughout North Carolina. Using a data set that contains the spatial geometry for all counties within North Carolina, I joined the spatial data set with the already cleaned finalData.csv data set to create a geoData.csv data set. In the end, I plotted a choropleth map of NC showing the counties with different allowable CAFO counts at different color indexes. We can see counties like Sampson, Duplin, and Bladin county all are marked in noticeably different colors, and thus can be seen as areas with significantly higher CAFO counts. We can see a few other areas with less noticeable differences.
+
+For even further future analysis, I can easily change the variable of interest on these choropleth maps; I can choose to display a map of NC based on the different health variables, for example, such as physically or mentally unhealthy days. In creating such plots, we can compare them to each other to gain a more geographical sense of relationship between allowable CAFO count and health.
