@@ -4,6 +4,7 @@ SHELL: /bin/bash
 clean: 
 	rm -f derivedData/*.csv
 	rm -f figures/*.png
+	rm -f Python-Integration/figures/*.png
 	rm -f project1.pdf
 
 cafoHistoExplore:\
@@ -13,6 +14,18 @@ cafoHistoExplore:\
 scatterExplore:\
  derivedData/finalData.csv\
 	Rscript scatterExplore.R ${PORT}
+
+Python-Integration/sorData/finalData.csv:\
+ sourceData/List_Of_Permitted_Animal_Facilities2019-11-06.xls\
+ sourceData/2020_County_Health_Rankings_North_Carolina_Data_-_v1_0.xlsx\
+ tidyData.R
+	Rscript tidyData.R
+
+Python-Integration/figures/geoPlot.png:\
+ Python-Integration/sorData/finalData.csv\
+ Python-Integration/sorData/NC_Counties.zip\
+ pythonIntegration.py
+ 	python pythonIntegration.py
 
 derivedData/finalData.csv:\
  sourceData/List_Of_Permitted_Animal_Facilities2019-11-06.xls\
