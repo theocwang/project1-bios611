@@ -25,7 +25,7 @@ Python-Integration/figures/geoPlot.png:\
  Python-Integration/sorData/finalData.csv\
  Python-Integration/sorData/NC_Counties.zip\
  pythonIntegration.py
- 	python pythonIntegration.py
+ 	python3 pythonIntegration.py
 
 derivedData/finalData.csv:\
  sourceData/List_Of_Permitted_Animal_Facilities2019-11-06.xls\
